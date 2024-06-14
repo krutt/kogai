@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /* imports */
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 /* components */
 import { Button } from '@/components/ui/button'
@@ -9,6 +9,7 @@ import GithubBadge from '@/assets/github.svg'
 
 let albyAddress = ref('')
 let albyPublicKey = ref('')
+let blockHashes = ref([])
 let lockAddress = ref('')
 
 let connectWallet = async () => {
@@ -39,6 +40,18 @@ let createTaprootAddress = async () => {
       }
     })
 }
+
+onMounted(async () => {
+  const eventSource = new EventSource('/blocks')
+  eventSource.addEventListener('message', event => {
+    let { blockHash } = JSON.parse(event.data)
+    if (blockHashes.value.includes(blockHash)) return
+    blockHashes.value.push(blockHash)
+  })
+  eventSource.addEventListener('end', () => {
+    eventSource.close()
+  })
+})
 </script>
 
 <template>
@@ -48,21 +61,21 @@ let createTaprootAddress = async () => {
         <h2 class="text-3xl font-bold tracking-tight">Kogai</h2>
       </div>
     </div>
-    <section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10">
-      <div className="text-center lg:text-start space-y-6">
-        <main className="text-5xl md:text-6xl font-bold">
-          <h1 className="inline">
+    <section class="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10">
+      <div class="text-center lg:text-start space-y-6">
+        <main class="text-5xl md:text-6xl font-bold">
+          <h1 class="inline">
             <span
-              className="inline bg-gradient-to-r from-[#FF146E] via-[#FFADCD] to-[#FF146E] text-transparent bg-clip-text"
+              class="inline bg-gradient-to-r from-[#FF146E] via-[#FFADCD] to-[#FF146E] text-transparent bg-clip-text"
             >
               Kogai
             </span>
             create simple locks
           </h1>
-          <h2 className="inline">
+          <h2 class="inline">
             with
             <span
-              className="inline bg-gradient-to-r from-[#ff9999] via-[#ff9900] to-[#ff9999] text-transparent bg-clip-text"
+              class="inline bg-gradient-to-r from-[#ff9999] via-[#ff9900] to-[#ff9999] text-transparent bg-clip-text"
             >
               Taproot
             </span>
@@ -100,6 +113,14 @@ let createTaprootAddress = async () => {
           <CardContent>
             {{ lockAddress }}
           </CardContent>
+        </Card>
+      </div>
+      <div class="grid gap-4 py-4 grid-cols-1 hidden">
+        <h2 class="inline">Blocks since Pageload</h2>
+        <Card v-for="blockHash in blockHashes">
+          <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle class="text-sm font-medium">{{ blockHash }} </CardTitle>
+          </CardHeader>
         </Card>
       </div>
     </section>
