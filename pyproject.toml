@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "kogai"
+version = "0.0.1"
+description = "Kogai: Taproot Locking and Spending Workshop"
+authors = ["Sitt Guruvanich <aekazitt+github@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.111.0"
+rizzler = "^0.1.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

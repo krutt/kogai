@@ -1,0 +1,14 @@
+# Node
+dist
+node_modules
+
+# Python
+**/__pycache__
+
+# macOS
+**/.DS_Store
+**/.env
+
+# Workspace settings
+.idea
+.vscode
