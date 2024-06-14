@@ -9,10 +9,6 @@ from uvicorn import run
 
 templates = RizzleTemplates(directory="templates")
 
-@Rizzler.load_config
-def rizzler_settings() -> List[Tuple[str, str]]:
-  return [("framework", "react")]
-
 @asynccontextmanager
 async def lifespan(_: FastAPI):
   await Rizzler.serve()
