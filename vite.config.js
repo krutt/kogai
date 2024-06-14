@@ -2,6 +2,7 @@
 import autoprefixer from 'autoprefixer'
 import { defineConfig } from 'vite'
 import path from 'path'
+import svgLoader from 'vite-svg-loader'
 import vue from '@vitejs/plugin-vue'
 import tailwind from 'tailwindcss'
 
@@ -12,7 +13,7 @@ export default defineConfig({
       plugins: [tailwind(), autoprefixer()],
     },
   },
-  plugins: [vue()],
+  plugins: [svgLoader(), vue()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './pages'),
