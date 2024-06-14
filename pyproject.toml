@@ -8,6 +8,7 @@ authors = ['Sitt Guruvanich <aekazitt+github@gmail.com>']
 description = 'Kogai: Taproot Locking and Spending Workshop'
 license = 'MIT'
 name = 'kogai'
+packages = [{include='serve.py'}]
 readme = 'README.md'
 version = '0.0.1'
 
