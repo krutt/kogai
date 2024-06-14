@@ -3,7 +3,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./pages/*"]
-    }
+    },
+    "target": "ES2015"
   },
   "exclude": [],
   "include": ["pages/**/*"]
