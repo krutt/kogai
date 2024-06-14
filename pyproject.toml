@@ -1,17 +1,34 @@
+[build-system]
+build-backend = 'poetry.core.masonry.api'
+requires = ['poetry-core']
+
+
 [tool.poetry]
-name = "kogai"
-version = "0.0.1"
-description = "Kogai: Taproot Locking and Spending Workshop"
-authors = ["Sitt Guruvanich <aekazitt+github@gmail.com>"]
-license = "MIT"
-readme = "README.md"
+authors = ['Sitt Guruvanich <aekazitt+github@gmail.com>']
+description = 'Kogai: Taproot Locking and Spending Workshop'
+license = 'MIT'
+name = 'kogai'
+readme = 'README.md'
+version = '0.0.1'
+
 
 [tool.poetry.dependencies]
-python = "^3.8"
-fastapi = "^0.111.0"
-rizzler = "^0.1.5"
+fastapi = '^0.111.0'
+python = '^3.8'
+python-bitcointx = '^1.1.5'
+rizzler = '^0.1.5'
 
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.poetry.group.dev]
+optional = true
+
+
+[tool.poetry.group.dev.dependencies]
+aesir = '^0.4.2'
+ruff = '^0.4.8'
+
+
+[tool.ruff]
+indent-width = 2
+line-length = 100
+target-version = 'py38'
