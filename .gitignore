@@ -9,6 +9,9 @@ node_modules
 **/.DS_Store
 **/.env
 
+# Ruff
+.ruff_cache
+
 # Workspace settings
 .idea
 .vscode
