@@ -45,7 +45,7 @@ let createTaprootAddress = async () => {
 }
 
 let fetchBalance = async () => {
-  await fetch(`/balance/${ albyAddress.value }`)
+  await fetch(`/balance/${albyAddress.value}`)
     .catch(console.error)
     .then(async resp => {
       if (!!resp) {
@@ -57,16 +57,28 @@ let fetchBalance = async () => {
 
 let sendToLock = async () => {
   // Switch to unisat for payment
+  await fetch('/send', {
+    body: JSON.stringify({ address: lockAddress.value, amount: 1.0 }),
+    headers: { 'Content-Type': 'application/json;' },
+    method: 'POST',
+  })
+    .catch(console.error)
+    .then(async resp => {
+      if (!!resp) {
+        let data = await resp.json()
+        console.log(data)
+      }
+    })
 }
 
 let tapFaucet = async () => {
   await fetch('/faucet', {
-    body: JSON.stringify({address: albyAddress.value}),
+    body: JSON.stringify({ address: albyAddress.value }),
     headers: { 'Content-Type': 'application/json;' },
     method: 'POST',
   })
-  .catch(console.error)
-  .then(console.log)
+    .catch(console.error)
+    .then(console.log)
 }
 
 onMounted(async () => {
@@ -129,26 +141,18 @@ onMounted(async () => {
             <span>
               {{ albyAddress }}
             </span>
-            <h3>
-              Balance
-            </h3>
+            <h3>Balance</h3>
             <span>
               {{ balance }}
             </span>
             <Button @click="createTaprootAddress" class="float-right mb-4 mt-4">
-              <span class="cursor-pointer">
-                Create Taproot Address
-              </span>
+              <span class="cursor-pointer"> Create Taproot Address </span>
             </Button>
             <Button @click="tapFaucet" class="float-right mb-4 mt-4" variant="secondary">
-              <span class="cursor-pointer">
-                Tap Faucet
-              </span>
+              <span class="cursor-pointer"> Tap Faucet </span>
             </Button>
             <Button @click="fetchBalance" class="float-right mb-4 mt-4" variant="outline">
-              <span class="cursor-pointer">
-                Fetch Balance
-              </span>
+              <span class="cursor-pointer"> Fetch Balance </span>
             </Button>
           </CardContent>
         </Card>
@@ -160,9 +164,7 @@ onMounted(async () => {
             {{ lockAddress }}
           </CardContent>
           <Button @click="sendToLock" class="float-right mb-4 mt-4" variant="outline">
-            <span class="cursor-pointer">
-              Send to Lock Address
-            </span>
+            <span class="cursor-pointer"> Send to Lock Address </span>
           </Button>
         </Card>
       </div>

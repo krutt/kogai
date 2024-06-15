@@ -26,13 +26,11 @@ from rizzler import Rizzler, RizzleTemplates
 from typing import AsyncGenerator, Dict, Literal, Union
 from uuid import uuid4 as uuid
 
-select_chain_params("bitcoin/regtest")
-templates = RizzleTemplates(directory="templates")
-
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
   await Rizzler.serve()
+  select_chain_params("bitcoin/regtest")
   caller: RPCCaller = RPCCaller("http://aesir:aesir@localhost", 18443)
   caller.connect()
   if len(caller.listwallets()) == 0:
@@ -44,6 +42,7 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+templates = RizzleTemplates(directory="templates")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -71,6 +70,7 @@ async def fetch_balance(address: str) -> Dict[Literal["balance"], float]:
   txouts: list = caller.scantxoutset("start", [{"desc": f"addr({ address })"}])
   caller.scantxoutset("abort", [{"desc": f"addr({ address })"}])
   return {"balance": txouts.get("total_amount", 0.0)}
+
 
 @app.get("/blocks")
 def fetch_blocks() -> EventSourceResponse:
@@ -108,6 +108,28 @@ async def lock(payload: LockPayload) -> Dict[Literal["address"], str]:
   tree.set_internal_pubkey(internal_pubkey)
   address: P2TRCoinAddress = P2TRCoinAddress.from_script_tree(tree)
   return {"address": str(address)}
+
+
+class SendPayload(BaseModel):
+  address: StrictStr
+  amount: float
+
+
+@app.post("/send")
+async def send_payment(payload: SendPayload) -> str:
+  caller: RPCCaller = RPCCaller("http://aesir:aesir@localhost", 18443)
+  caller.connect()
+  caller.sendtoaddress(payload.address, payload.amount)
+  return "OK"
+
+
+class UnlockPayload(BaseModel):
+  address: StrictStr
+
+
+@app.post("/unlock")
+async def send_unlock_payment(payload: UnlockPayload) -> str:
+  return "OK"
 
 
 if __name__ == "__main__":
