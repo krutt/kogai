@@ -33,6 +33,12 @@ templates = RizzleTemplates(directory="templates")
 @asynccontextmanager
 async def lifespan(_: FastAPI):
   await Rizzler.serve()
+  caller: RPCCaller = RPCCaller("http://aesir:aesir@localhost", 18443)
+  caller.connect()
+  if len(caller.listwallets()) == 0:
+    caller.createwallet("default", False, False)
+    treasury = caller.getnewaddress()
+    caller.generatetoaddress(100, treasury)
   yield
   Rizzler.shutdown()
 
@@ -43,6 +49,45 @@ app = FastAPI(lifespan=lifespan)
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request) -> HTMLResponse:
   return templates.TemplateResponse("index.html", {"request": request})
+
+
+async def blocks_generator() -> (
+  AsyncGenerator[Dict[Literal["event", "id", "data"], Union[int, str]], None]
+):
+  caller: RPCCaller = RPCCaller("http://aesir:aesir@localhost", 18443)
+  caller.connect()
+  yield {
+    "event": "message",
+    "id": str(uuid()).replace("-", ""),
+    "data": dumps({"blockHash": caller.getbestblockhash()}),
+  }
+  await sleep(10)
+
+
+@app.get("/balance/{address}")
+async def fetch_balance(address: str) -> Dict[Literal["balance"], float]:
+  caller: RPCCaller = RPCCaller("http://aesir:aesir@localhost", 18443)
+  caller.connect()
+  txouts: list = caller.scantxoutset("start", [{"desc": f"addr({ address })"}])
+  caller.scantxoutset("abort", [{"desc": f"addr({ address })"}])
+  return {"balance": txouts.get("total_amount", 0.0)}
+
+@app.get("/blocks")
+def fetch_blocks() -> EventSourceResponse:
+  return EventSourceResponse(blocks_generator())
+
+
+class FaucetPayload(BaseModel):
+  address: StrictStr
+
+
+@app.post("/faucet")
+async def faucet(payload: FaucetPayload) -> str:
+  caller: RPCCaller = RPCCaller("http://aesir:aesir@localhost", 18443)
+  caller.connect()
+  ### Generate to core and send to targeted addresss ###
+  caller.generatetoaddress(6, payload.address)
+  return "OK"
 
 
 class LockPayload(BaseModel):
@@ -63,24 +108,6 @@ async def lock(payload: LockPayload) -> Dict[Literal["address"], str]:
   tree.set_internal_pubkey(internal_pubkey)
   address: P2TRCoinAddress = P2TRCoinAddress.from_script_tree(tree)
   return {"address": str(address)}
-
-
-async def blocks_generator() -> (
-  AsyncGenerator[Dict[Literal["event", "id", "data"], Union[int, str]], None]
-):
-  caller: RPCCaller = RPCCaller("http://aesir:aesir@localhost", 18443)
-  caller.connect()
-  yield {
-    "event": "message",
-    "id": str(uuid()).replace("-", ""),
-    "data": dumps({"blockHash": caller.getbestblockhash()}),
-  }
-  await sleep(10)
-
-
-@app.get("/blocks")
-def fetch_blocks() -> EventSourceResponse:
-  return EventSourceResponse(blocks_generator())
 
 
 if __name__ == "__main__":

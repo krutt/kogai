@@ -1,23 +1,26 @@
 <script setup lang="ts">
 /* imports */
-import { onMounted, ref } from 'vue'
+import { Ref, onMounted, ref } from 'vue'
 
 /* components */
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import GithubBadge from '@/assets/github.svg'
 
-let albyAddress = ref('')
-let albyPublicKey = ref('')
-let blockHashes = ref([])
-let lockAddress = ref('')
+let albyAddress: Ref<string> = ref('')
+let albyDerivationPath: Ref<string> = ref('')
+let albyPublicKey: Ref<string> = ref('')
+let balance: Ref<number> = ref(0)
+let blockHashes: Ref<Array<string>> = ref([])
+let lockAddress: Ref<string> = ref('')
 
 let connectWallet = async () => {
   const _window = window as typeof window & { webbtc?: any }
   if (typeof _window.webbtc !== 'undefined') {
     await _window.webbtc.enable()
-    let { address, publicKey } = await _window.webbtc.getAddress()
+    let { address, derivationPath, publicKey } = await _window.webbtc.getAddress()
     albyAddress.value = address
+    albyDerivationPath.value = derivationPath
     albyPublicKey.value = publicKey
   }
 }
@@ -39,6 +42,31 @@ let createTaprootAddress = async () => {
         lockAddress.value = address
       }
     })
+}
+
+let fetchBalance = async () => {
+  await fetch(`/balance/${ albyAddress.value }`)
+    .catch(console.error)
+    .then(async resp => {
+      if (!!resp) {
+        let data = await resp.json()
+        balance.value = data.balance
+      }
+    })
+}
+
+let sendToLock = async () => {
+  // Switch to unisat for payment
+}
+
+let tapFaucet = async () => {
+  await fetch('/faucet', {
+    body: JSON.stringify({address: albyAddress.value}),
+    headers: { 'Content-Type': 'application/json;' },
+    method: 'POST',
+  })
+  .catch(console.error)
+  .then(console.log)
 }
 
 onMounted(async () => {
@@ -101,8 +129,26 @@ onMounted(async () => {
             <span>
               {{ albyAddress }}
             </span>
+            <h3>
+              Balance
+            </h3>
+            <span>
+              {{ balance }}
+            </span>
             <Button @click="createTaprootAddress" class="float-right mb-4 mt-4">
-              Create Taproot Address
+              <span class="cursor-pointer">
+                Create Taproot Address
+              </span>
+            </Button>
+            <Button @click="tapFaucet" class="float-right mb-4 mt-4" variant="secondary">
+              <span class="cursor-pointer">
+                Tap Faucet
+              </span>
+            </Button>
+            <Button @click="fetchBalance" class="float-right mb-4 mt-4" variant="outline">
+              <span class="cursor-pointer">
+                Fetch Balance
+              </span>
             </Button>
           </CardContent>
         </Card>
@@ -113,6 +159,11 @@ onMounted(async () => {
           <CardContent>
             {{ lockAddress }}
           </CardContent>
+          <Button @click="sendToLock" class="float-right mb-4 mt-4" variant="outline">
+            <span class="cursor-pointer">
+              Send to Lock Address
+            </span>
+          </Button>
         </Card>
       </div>
       <div class="grid gap-4 py-4 grid-cols-1 hidden">
