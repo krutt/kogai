@@ -116,6 +116,46 @@ $ sudo cmake --build . --target install  # optional
 ```
 </details>
 
+If you had never set up a local Regtest environment before, Krutt created an easy to use command-line
+interface called [Aesir](https://github.com/krutt/aesir) usable on the terminal for setting up
+a local Bitcoin &amp; Lightning regtest node set-up easily rinse-and-repeatable via few simple commands
+as such.
+
+```sh
+poetry install --with dev  # aesir defined in development dependencies already.
+# OR
+pip install aesir
+```
+
+<details>
+<summary> Aesir installation steps on POSIX shell </summary>
+
+```sh
+```
+</details>
+
+And deploy a local cluster with just one command. If you're lucky enough not to run into this one
+unresolved [issue](https://github.com/docker/docker-py/issues/3059) on `docker-py` github repository
+on macOS terminal. Steps to fix this and deploy successfully will be detailed below.
+
+```sh
+aesir deploy
+```
+
+<details>
+<summary> Fixing the docker-library issue and deploy local Bitcoin &amp; Lightning cluster </summary>
+
+```sh
+$ kogai ❯ aesir deploy
+> Unable to connect to docker daemon.
+$ kogai ❯ sudo ln -s "$HOME/.docker/run/docker.sock" /var/run/docker.sock
+> Password:
+$ kogai ❯ aesir deploy
+> Deploy duo cluster:                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+> Deploy shared-volume peripherals:          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+```
+</details>
+
 And finally serve the local web application and visit `http://127.0.0.1:8000` on your preferred 
 internet browser with Alby Bitcoin & Lightning Wallet extension installed.
 
