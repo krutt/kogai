@@ -14,9 +14,11 @@
 
 * python (3.8+)
 * pip
-* docker
+* [docker](https://docs.docker.com/get-docker/)
 * [aesir](https://github.com/aekasitt/aesir) - CLI used for setting up local Bitcoin &amp; Lightning regtest
-* [Chrome ![Chrome Logo](static/chrome.svg)]() or [Firefox ![Firefox Logo](static/firefox.svg)]()
+* Web browser of choice (Chrome or Firefox)
+  * [Chrome ![Chrome Logo](static/chrome.svg)](https://www.google.com/chrome/)
+  * [Firefox ![Firefox Logo](static/firefox.svg)](https://www.mozilla.org/en-US/firefox/new/)
 * Alby - Bitcoin Lightning Wallet & Nostr <sup>[*]</sup> 
   * [Add extension to Chrome ![Chrome Logo](static/chrome.svg)](https://chromewebstore.google.com/detail/alby-bitcoin-wallet-for-l/iokeahhehimjnekafflcihljlcjccdbe)
   * [Add extension to Firefox ![Firefox Logo](static/firefox.svg)](https://addons.mozilla.org/en-US/firefox/addon/alby/s)
