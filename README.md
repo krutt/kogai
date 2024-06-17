@@ -1,7 +1,6 @@
 # Kogai
 
 [![Bitcoin-only](https://img.shields.io/badge/bitcoin-only-FF9900?logo=bitcoin)](https://twentyone.world)
-[![Docker](https://img.shields.io/badge/docker-2496ED?&logo=docker&logoColor=white)](https://hub.docker.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/krutt/kogai/blob/master/LICENSE)
 [![Top](https://img.shields.io/github/languages/top/krutt/kogai)](https://github.com/krutt/kogai)
 [![Languages](https://img.shields.io/github/languages/count/krutt/kogai)](https://github.com/krutt/kogai)
