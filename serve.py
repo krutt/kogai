@@ -41,6 +41,7 @@ from uuid import uuid4 as uuid
 
 select_chain_params("bitcoin/regtest")
 
+
 @asynccontextmanager
 async def lifespan(_: FastAPI):
   await Rizzler.serve()
@@ -119,7 +120,9 @@ class LockPayload(BaseModel):
 
 
 @app.post("/lock")
-async def lock(payload: LockPayload, tree: Annotated[TaprootScriptTree, Depends(taproot_script_tree)]) -> Dict[Literal["address"], str]:
+async def lock(
+  payload: LockPayload, tree: Annotated[TaprootScriptTree, Depends(taproot_script_tree)]
+) -> Dict[Literal["address"], str]:
   ### create a provably unspendable public key in order to ###
   ### make the coins spendable ONLY using the script path ###
   internal_pubkey = CCoinKey.from_secret_bytes(unhexlify(payload.pubkey[2:])).xonly_pub
@@ -150,7 +153,7 @@ class UnlockPayload(BaseModel):
 @app.post("/unlock")
 async def send_unlock_payment(
   caller: Annotated[RPCCaller, Depends(rpc_caller)],
-  tree : Annotated[TaprootScriptTree, Depends(taproot_script_tree)],
+  tree: Annotated[TaprootScriptTree, Depends(taproot_script_tree)],
   payload: UnlockPayload,
 ) -> Dict[Literal["txid"], str]:
   internal_pubkey = CCoinKey.from_secret_bytes(unhexlify(payload.pubkey[2:])).xonly_pub
