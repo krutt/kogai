@@ -4,7 +4,14 @@ import { Ref, onMounted, ref } from 'vue'
 
 /* components */
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 /* vectors */
 import AlbyLogo from '@/assets/alby.svg'
@@ -130,7 +137,11 @@ onMounted(async () => {
     <div class="flex-1 space-y-4 p-8 pt-6">
       <div class="flex items-center justify-between space-y-2">
         <h2 class="text-3xl font-bold tracking-tight">Kogai</h2>
-        <Button @click="connectWallet" class="cursor-pointer float-right md:w-1/4 w-1/2" v-if="!albyAddress">
+        <Button
+          @click="connectWallet"
+          class="cursor-pointer float-right md:w-1/4 w-1/2"
+          v-if="!albyAddress"
+        >
           Connect Wallet
           <alby-logo class="h-6 inline ml-2 w-auto" />
         </Button>
@@ -178,102 +189,109 @@ onMounted(async () => {
         </div>
       </div>
       <div class="grid gap-4 py-4 grid-cols-1">
-        <Card v-if="albyAddress">
-          <CardHeader>
-            <CardTitle> Address </CardTitle>
-            <CardDescription>
-              This is your Bitcoin Address currently selected and provided by Alby Wallet Extension.
-            </CardDescription>
-          </CardHeader>
-          <CardContent class="break-all text-sm font-medium">
-            {{ albyAddress }}
-          </CardContent>
-          <CardFooter class="justify-between space-x-2">
-            <Button
-              @click="tapFaucet"
-              class="cursor-pointer"
-              variant="secondary"
-            >
-              Tap Faucet
-            </Button>
-            <Button
-              @click="fetchBalance"
-              class="cursor-pointer"
-              variant="outline"
-            >
-              Fetch Balance
-            </Button>
-          </CardFooter>
-        </Card>
-        <Card v-if="albyAddress && !lockAddress">
-          <CardHeader>
-            <CardTitle> Create Taproot Lock </CardTitle>
-            <CardDescription>
-              Here we will construct an address that locks its funds that will only be spendable if
-              any of the 3 mathematical equations get solved.
-            </CardDescription>
-          </CardHeader>
-          <CardFooter class="flex flex-col items-end">
-            <Button @click="createTaprootAddress" class="cursor-pointer">
-              Create Taproot Address
-            </Button>
-          </CardFooter>
-        </Card>
-        <Card v-if="lockAddress">
-          <CardHeader>
-            <CardTitle> Lock Address </CardTitle>
-            <CardDescription>
-              After getting an address, send 0.01 BTC to it. In the next step, we'll solve one of
-              the equations and spend those funds.
-            </CardDescription>
-          </CardHeader>
-          <CardContent class="break-all text-sm font-medium">
-            {{ lockAddress }}
-          </CardContent>
-          <CardFooter class="flex flex-col items-end">
-            <Button
-              @click="sendToLock"
-              :variant="!lockTxid ? '' : 'outline'"
-              class="cursor-pointer"
-            >
-              Send 0.1 BTC to Lock Address
-            </Button>
-          </CardFooter>
-        </Card>
-        <Card v-if="lockTxid">
-          <CardHeader>
-            <CardTitle> Locking Transaction Hash </CardTitle>
-            <CardDescription>
-              In this example, we will unlock the funds by solving the 2nd mathematical equation
-              (x + 2 = 4). In order to unlock the funds we must provide a value X.
-            </CardDescription>
-          </CardHeader>
-          <CardContent class="break-all font-medium text-sm">
-            {{ lockTxid }}
-          </CardContent>
-          <CardFooter class="flex flex-col items-end">
-            <Button @click="unlock" class="cursor-pointer float-right mb-4 mt-4" :variant="!unlockTxid ? '' : 'outline'">
-              Unlock
-            </Button>
-          </CardFooter>
-        </Card>
-        <Card v-if="unlockTxid">
-          <CardHeader>
-            <CardTitle> Unlocking Transaction Hash </CardTitle>
-          </CardHeader>
-          <CardContent class="break-all text-sm font-medium">
-            {{ unlockTxid }}
-          </CardContent>
-          <CardFooter class="flex flex-col items-end">
-            <Button
-              @click="fetchBalance"
-              class="cursor-pointer float-right mb-4 mt-4"
-              variant="secondary"
-            >
-              Fetch unlocked balance
-            </Button>
-          </CardFooter>
-        </Card>
+        <Transition name="fade">
+          <Card v-if="albyAddress">
+            <CardHeader>
+              <CardTitle> Address </CardTitle>
+              <CardDescription>
+                This is your Bitcoin Address currently selected and provided by Alby Wallet
+                Extension.
+              </CardDescription>
+            </CardHeader>
+            <CardContent class="break-all text-sm font-medium">
+              {{ albyAddress }}
+            </CardContent>
+            <CardFooter class="justify-between space-x-2">
+              <Button @click="tapFaucet" class="cursor-pointer" variant="secondary">
+                Tap Faucet
+              </Button>
+              <Button @click="fetchBalance" class="cursor-pointer" variant="outline">
+                Fetch Balance
+              </Button>
+            </CardFooter>
+          </Card>
+        </Transition>
+        <Transition name="fade">
+          <Card v-if="albyAddress && !lockAddress">
+            <CardHeader>
+              <CardTitle> Create Taproot Lock </CardTitle>
+              <CardDescription>
+                Here we will construct an address that locks its funds that will only be spendable
+                if any of the 3 mathematical equations get solved.
+              </CardDescription>
+            </CardHeader>
+            <CardFooter class="flex flex-col items-end">
+              <Button @click="createTaprootAddress" class="cursor-pointer">
+                Create Taproot Address
+              </Button>
+            </CardFooter>
+          </Card>
+        </Transition>
+        <Transition name="fade">
+          <Card v-if="lockAddress">
+            <CardHeader>
+              <CardTitle> Lock Address </CardTitle>
+              <CardDescription>
+                After getting an address, send 0.01 BTC to it. In the next step, we'll solve one of
+                the equations and spend those funds.
+              </CardDescription>
+            </CardHeader>
+            <CardContent class="break-all text-sm font-medium">
+              {{ lockAddress }}
+            </CardContent>
+            <CardFooter class="flex flex-col items-end">
+              <Button
+                @click="sendToLock"
+                :variant="!lockTxid ? '' : 'outline'"
+                class="cursor-pointer"
+              >
+                Send 0.1 BTC to Lock Address
+              </Button>
+            </CardFooter>
+          </Card>
+        </Transition>
+        <Transition name="fade">
+          <Card v-if="lockTxid">
+            <CardHeader>
+              <CardTitle> Locking Transaction Hash </CardTitle>
+              <CardDescription>
+                In this example, we will unlock the funds by solving the 2nd mathematical equation
+                (x + 2 = 4). In order to unlock the funds we must provide a value X.
+              </CardDescription>
+            </CardHeader>
+            <CardContent class="break-all font-medium text-sm">
+              {{ lockTxid }}
+            </CardContent>
+            <CardFooter class="flex flex-col items-end">
+              <Button
+                @click="unlock"
+                class="cursor-pointer float-right mb-4 mt-4"
+                :variant="!unlockTxid ? '' : 'outline'"
+              >
+                Unlock
+              </Button>
+            </CardFooter>
+          </Card>
+        </Transition>
+        <Transition name="fade">
+          <Card v-if="unlockTxid">
+            <CardHeader>
+              <CardTitle> Unlocking Transaction Hash </CardTitle>
+            </CardHeader>
+            <CardContent class="break-all text-sm font-medium">
+              {{ unlockTxid }}
+            </CardContent>
+            <CardFooter class="flex flex-col items-end">
+              <Button
+                @click="fetchBalance"
+                class="cursor-pointer float-right mb-4 mt-4"
+                variant="secondary"
+              >
+                Fetch unlocked balance
+              </Button>
+            </CardFooter>
+          </Card>
+        </Transition>
       </div>
       <div class="grid gap-4 py-4 grid-cols-1 hidden">
         <h2 class="inline">Blocks since Pageload</h2>
@@ -286,3 +304,14 @@ onMounted(async () => {
     </section>
   </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leace-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
