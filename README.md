@@ -18,7 +18,7 @@
 * [node](https://nodejs.org) - Run JavaScript Everywhere
 * [pnpm](https://pnpm.io) - Fast, disk space efficient package manager
 * [docker](https://docs.docker.com/get-docker) - Accelerated container application development
-* [![Valknut](static/valknut.svg) aesir](https://github.com/aekasitt/aesir) - CLI used for setting up local Bitcoin &amp; Lightning regtest
+* [![Valknut](static/valknut.svg) aesir](https://github.com/krutt/aesir) - CLI used for setting up local Bitcoin &amp; Lightning regtest
 * Web browser of choice (Chrome or Firefox)
   * [![Chrome Logo](static/chrome.svg) Chrome](https://www.google.com/chrome)
   * [![Firefox Logo](static/firefox.svg) Firefox](https://www.mozilla.org/en-US/firefox/new)
