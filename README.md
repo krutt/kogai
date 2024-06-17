@@ -12,13 +12,16 @@
 
 ## Prerequisites
 
-* python (3.8+)
-* pip
-* [docker](https://docs.docker.com/get-docker/)
+* python (3.8+) - High-level general-purpose programming language largely available on POSIX systems
+* [pip](https://pypi.org/project/pip) - package installer for Python
+* [poetry](https://python-poetry.org) - Python packaging and dependency management made easy
+* [node](https://nodejs.org) - Run JavaScript Everywhere
+* [pnpm](https://pnpm.io) - Fast, disk space efficient package manager
+* [docker](https://docs.docker.com/get-docker) - Accelerated container application development
 * [aesir](https://github.com/aekasitt/aesir) - CLI used for setting up local Bitcoin &amp; Lightning regtest
 * Web browser of choice (Chrome or Firefox)
-  * [Chrome ![Chrome Logo](static/chrome.svg)](https://www.google.com/chrome/)
-  * [Firefox ![Firefox Logo](static/firefox.svg)](https://www.mozilla.org/en-US/firefox/new/)
+  * [Chrome ![Chrome Logo](static/chrome.svg)](https://www.google.com/chrome)
+  * [Firefox ![Firefox Logo](static/firefox.svg)](https://www.mozilla.org/en-US/firefox/new)
 * Alby - Bitcoin Lightning Wallet & Nostr <sup>[*]</sup> 
   * [Add extension to Chrome ![Chrome Logo](static/chrome.svg)](https://chromewebstore.google.com/detail/alby-bitcoin-wallet-for-l/iokeahhehimjnekafflcihljlcjccdbe)
   * [Add extension to Firefox ![Firefox Logo](static/firefox.svg)](https://addons.mozilla.org/en-US/firefox/addon/alby/s)
@@ -31,7 +34,31 @@
 
 ## Why Alby
 
-To be elaborated.
+The original intention for this project was to make scripting approachable to degens and plebs
+alike. All the popular wallet extensions were tried but Alby for two main reasons. Alby wallet
+extension can be switched to `regtest` network with ease and does not prominently steer its users
+toward subscribing to blockchain data. Krutt encourages specifications for wallet extensions laid
+out under the [WebBTC Specs](https://webbtc.dev)
+
+### Anti-Patterns found in popular wallet extensions
+
+* Prominent token promotion: While definitions for `Bitcoin L2` becomes more and more profitable to
+  obscure, tokens like `STX` are not recognized largely as one. This prominent promotion in extension
+  storefront and homepage incur choice-conundrum for users with lesser alternatives and is not
+  encouraged by Krutt and team. Lightning with its long-standing history with Bitcoin does not incur
+  the same cost as it is always encouraged for node-runners to attach their own sources of truths
+  for blockchain data.
+* API-reliance: All ordinals-focused wallet extensions rely on making API calls to individual API 
+  servers preventing pure JSON-RPC calls to Bitcoin Nodes.
+* Regtest not supported: This is a continuation for the previous fault. Due to heavy-reliance on API
+  access, there can never be a singular `regtest` network.
+
+## What Alby lacks (circa Jun 2024)
+
+According to the [WebBTC Specs](https://webbtc.dev), it would be nice if `window.webbtc.sendPayment`
+can also be implemented by Alby Wallet Extension as well. The current state of this sandbox requires
+a hand-off to the server sending `0.1 BTC` to the lock contract and can be improved if `sendPayment`
+is implemented according to the WebBTC specs.
 
 ## Contributions
 
