@@ -17,6 +17,7 @@
 * [poetry](https://python-poetry.org) - Python packaging and dependency management made easy
 * [node](https://nodejs.org) - Run JavaScript Everywhere
 * [pnpm](https://pnpm.io) - Fast, disk space efficient package manager
+* [libsecp256k1](https://github.com/bitcoin-core/secp256k1) - Optimized C Library for EC operations on curve secp256k1
 * [docker](https://docs.docker.com/get-docker) - Accelerated container application development
 * [![Valknut](static/valknut.svg) aesir](https://github.com/krutt/aesir) - CLI used for setting up local Bitcoin &amp; Lightning regtest
 * Web browser of choice (Chrome or Firefox)
@@ -31,6 +32,151 @@
 ## Getting started
 
 [![Kogai walkthru](static/kogai.gif)](https://github.com/krutt/kogai/blob/master/static/kogai.gif)
+
+You can set up `kogai` sandbox simply by setting up your local Python environment via Poetry as such
+
+```sh
+pip install -U poetry
+poetry install
+poetry shell
+```
+
+<details>
+<summary> Python dependency installation steps on POSIX shell </summary>
+
+```sh
+$ pip install -U poetry
+> ...
+> Downloading xxx-X.X.X-py3-none-any.whl (X.X kB)
+> Downloading xxx-X.XX-py3-none-any.whl (XXX kB)
+>    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 9.2 MB/s eta 0:00:00
+> Installing collected packages: ...
+> ...
+$ poetry install
+> Installing dependencies from lock file
+> 
+> ...
+> Installing the current project: kogai (0.0.1)
+$ poetry shell
+> Spawning shell within ...
+> emulate bash -c '. /path/to/shell'
+```
+</details>
+
+Since the front-end of this application will be managed by Node local envionment as well, it is
+recommended to have `node` and `pnpm` package manager installed. And then install project's
+javascript dependencies with the following command:
+
+```sh
+pnpm install
+```
+
+<details>
+<summary> Node dependency installation steps on POSIX shell </summary>
+
+```sh
+$ pnpm install
+> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> Progress: resolved 224, reused 173, downloaded 14, added 187, done
+> node_modules/.pnpm/vue-demi@0.14.8_vue@3.4.29/node_modules/vue-demi: Running postinstall script, done in 132ms
+> node_modules/.pnpm/esbuild@0.21.5/node_modules/esbuild: Running postinstall script, done in 299ms
+> 
+> dependencies:
+> + @vitejs/plugin-vue 5.0.5
+> + autoprefixer 10.4.19
+> + class-variance-authority 0.7.0
+> + clsx 2.1.1
+> + lucide-vue-next 0.394.0 (0.395.0 is available)
+> + prettier 3.3.2
+> + radix-vue 1.8.3
+> + tailwind-merge 2.3.0
+> + tailwindcss 3.4.4
+> + tailwindcss-animate 1.0.7
+> + vite 5.3.1
+> + vite-svg-loader 5.1.0
+> + vue 3.4.29
+> 
+> Done in 6.1s
+```
+</details>
+
+And finally, you must also be able to do Elliptic Curve operations on your local environment as well
+This is done by installing Bitcoin Core's C library `libsecp256k1`. Steps to build on POSIX systems
+or perhaps Windows environment can be found on the official GitHub [Repository](https://github.com/bitcoin-core/secp256k1#building-on-posix-systems)
+
+<details>
+<summary> Libsecp256k1 installation steps on POSIX shell </summary>
+
+```sh
+$ git clone git@github.com:bitcoin-core/secp256k1.git && cd secp256k1
+$ mkdir build && cd build
+$ cmake ..
+$ cmake --build .
+$ ctest  # run the test suite
+$ sudo cmake --build . --target install  # optional
+```
+</details>
+
+And finally serve the local web application and visit `http://127.0.0.1:8000` on your preferred 
+internet browser with Alby Bitcoin & Lightning Wallet extension installed.
+
+```sh
+uvicorn serve:app
+```
+
+<details>
+<summary> Uvicorn ASGI Web Server running </summary>
+
+```sh
+$ kogai ❯ uvicorn serve:app                                                                                                                    on  master [!⇡] is 📦 v0.0.1 via  v18.17.0 via 🐍 > v3.12.0 (kogai-py3.12) 
+> INFO:     Started server process [44832]
+> INFO:     Waiting for application startup.
+> INFO:     ⚡Serving Rizzler dev-server…
+> INFO:     Application startup complete.
+> INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+> INFO:     
+> INFO:     > kogai-frontend@0.0.1 dev /Users/mackasitt/workspaces/kogai
+> INFO:     > vite
+> INFO:     
+> INFO:     
+> INFO:     VITE v5.3.1  ready in 698 ms
+> INFO:     
+> INFO:     ➜  Local:   http://localhost:5173/
+> INFO:     ➜  Network: use --host to expose
+> INFO:     ➜  press h + enter to show help
+```
+</details>
+
+### Package manager overrides
+
+Add the following code sections to your local `serve.py` if you had other node package manager
+installed and do not use `pnpm`
+
+<details>
+<summary>Override Rizzler command with `Npm`</summary>
+
+  ```python
+  from rizzler import Rizzler
+  from typing import List, Tuple
+  ...
+  @Rizzler.load_config
+  def rizzler_settings () -> List[Tuple[str, str]]:
+    return [("command", "npm")]
+  ```
+</details>
+
+<details>
+<summary>Override Rizzler command with `Yarn`</summary>
+
+  ```python
+  from rizzler import Rizzler
+  from typing import List, Tuple
+  ...
+  @Rizzler.load_config
+  def rizzler_settings () -> List[Tuple[str, str]]:
+    return [("command", "yarn")]
+  ```
+</details>
 
 ## Why Alby
 
@@ -62,7 +208,7 @@ is implemented according to the WebBTC specs.
 
 ## Contributions
 
-## Disclosures
+To be determined;
 
 ## License
 
