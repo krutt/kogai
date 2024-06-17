@@ -18,13 +18,13 @@
 * [node](https://nodejs.org) - Run JavaScript Everywhere
 * [pnpm](https://pnpm.io) - Fast, disk space efficient package manager
 * [docker](https://docs.docker.com/get-docker) - Accelerated container application development
-* [aesir](https://github.com/aekasitt/aesir) - CLI used for setting up local Bitcoin &amp; Lightning regtest
+* [![Valknut](static/valknut.svg) aesir](https://github.com/aekasitt/aesir) - CLI used for setting up local Bitcoin &amp; Lightning regtest
 * Web browser of choice (Chrome or Firefox)
-  * [Chrome ![Chrome Logo](static/chrome.svg)](https://www.google.com/chrome)
-  * [Firefox ![Firefox Logo](static/firefox.svg)](https://www.mozilla.org/en-US/firefox/new)
+  * [![Chrome Logo](static/chrome.svg) Chrome](https://www.google.com/chrome)
+  * [![Firefox Logo](static/firefox.svg) Firefox](https://www.mozilla.org/en-US/firefox/new)
 * Alby - Bitcoin Lightning Wallet & Nostr <sup>[*]</sup> 
-  * [Add extension to Chrome ![Chrome Logo](static/chrome.svg)](https://chromewebstore.google.com/detail/alby-bitcoin-wallet-for-l/iokeahhehimjnekafflcihljlcjccdbe)
-  * [Add extension to Firefox ![Firefox Logo](static/firefox.svg)](https://addons.mozilla.org/en-US/firefox/addon/alby/s)
+  * [![Chrome Logo](static/chrome.svg) Add extension to Chrome](https://chromewebstore.google.com/detail/alby-bitcoin-wallet-for-l/iokeahhehimjnekafflcihljlcjccdbe)
+  * [![Firefox Logo](static/firefox.svg) Add extension to Firefox](https://addons.mozilla.org/en-US/firefox/addon/alby/s)
 
 <sup>*</sup>See why Alby and not Leather, Unisat or Xverse [here](#why-alby)
 
