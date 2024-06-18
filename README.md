@@ -257,6 +257,12 @@ can also be implemented by Alby Wallet Extension as well. The current state of t
 a hand-off to the server sending `0.1 BTC` to the lock contract and can be improved if `sendPayment`
 is implemented according to the WebBTC specs.
 
+For those interested, instead of the original specs, feel free to follow along with
+[Alby Docs on WebBTC](https://guides.getalby.com/developer-guide/v/alby-browser-extension-apis/window.webbtc)
+for your implementation which diverged some time ago for simplicity and minimalism. Hopefully we
+will see more self-sovereign methods that allow for broadcasting to a node selection menu as well.
+For example, self-sovereign method like Signing Partially-Signed Bitcoin Transaction is supported.
+
 ## Contributions
 
 To be determined;
