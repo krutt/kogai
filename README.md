@@ -167,7 +167,8 @@ uvicorn serve:app
 <summary> Uvicorn ASGI Web Server running </summary>
 
 ```sh
-$ kogai ❯ uvicorn serve:app                                                                                                                    on  master [!⇡] is 📦 v0.0.1 via  v18.17.0 via 🐍 > v3.12.0 (kogai-py3.12) 
+$ kogai ❯ uvicorn serve:app
+> v3.12.0 (kogai-py3.12) 
 > INFO:     Started server process [44832]
 > INFO:     Waiting for application startup.
 > INFO:     ⚡Serving Rizzler dev-server…
