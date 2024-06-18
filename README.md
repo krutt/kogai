@@ -154,7 +154,7 @@ aesir deploy
 ```
 
 <details>
-<summary> Fixing the docker-library issue and deploy local Bitcoin &amp; Lightning cluster </summary>
+<summary> Bypassing docker-py issue and deploy local Bitcoin &amp; Lightning cluster </summary>
 
 ```sh
 $ kogai ❯ aesir deploy
