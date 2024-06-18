@@ -75,10 +75,12 @@ pnpm install
 
 ```sh
 $ pnpm install
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 > Progress: resolved 224, reused 173, downloaded 14, added 187, done
-> node_modules/.pnpm/vue-demi@0.14.8_vue@3.4.29/node_modules/vue-demi: Running postinstall script, done in 132ms
-> node_modules/.pnpm/esbuild@0.21.5/node_modules/esbuild: Running postinstall script, done in 299ms
+> node_modules/.pnpm/vue-demi@0.14.8_vue@3.4.29/node_modules/vue-demi: Running postinstall
+> script, done in 132ms
+> node_modules/.pnpm/esbuild@0.21.5/node_modules/esbuild: Running postinstall script,
+> done in 299ms
 > 
 > dependencies:
 > + @vitejs/plugin-vue 5.0.5
