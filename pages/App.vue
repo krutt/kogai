@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<script setup>
 /* imports */
-import { Ref, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 /* components */
 import { Button } from '@/components/ui/button'
@@ -18,20 +18,19 @@ import AlbyLogo from '@/assets/alby.svg'
 import BitcoinDocs from '@/assets/bitcoindocs.svg'
 import GithubBadge from '@/assets/github.svg'
 
-let albyAddress: Ref<string> = ref('')
-let albyDerivationPath: Ref<string> = ref('')
-let albyPublicKey: Ref<string> = ref('')
-let balance: Ref<number> = ref(0)
-let blockHashes: Ref<Array<string>> = ref([])
-let lockAddress: Ref<string> = ref('')
-let lockTxid: Ref<string> = ref('')
-let unlockTxid: Ref<string> = ref('')
+let albyAddress = ref('')
+let albyDerivationPath = ref('')
+let albyPublicKey = ref('')
+let balance = ref(0)
+let blockHashes = ref([])
+let lockAddress = ref('')
+let lockTxid = ref('')
+let unlockTxid = ref('')
 
 let connectWallet = async () => {
-  const _window = window as typeof window & { webbtc?: any }
-  if (typeof _window.webbtc !== 'undefined') {
-    await _window.webbtc.enable()
-    let { address, derivationPath, publicKey } = await _window.webbtc.getAddress()
+  if (typeof window.webbtc !== 'undefined') {
+    await window.webbtc.enable()
+    let { address, derivationPath, publicKey } = await window.webbtc.getAddress()
     albyAddress.value = address
     albyDerivationPath.value = derivationPath
     albyPublicKey.value = publicKey

@@ -1,17 +1,16 @@
-<script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
+<script setup>
 import { cn } from '@/lib/utils'
 
-const props = defineProps<{
-  class?: HTMLAttributes['class']
-}>()
+const props = defineProps({
+  class: { type: null, required: false },
+})
 </script>
 
 <template>
   <div
     :class="
       cn(
-        'rounded-lg border border-stone-200 bg-white text-stone-950 shadow-sm dark:border-stone-800 dark:bg-stone-950 dark:text-stone-50',
+        'rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50',
         props.class
       )
     "
