@@ -133,6 +133,15 @@ pip install aesir
 <summary> Aesir installation steps on POSIX shell </summary>
 
 ```sh
+$ kogai ❯ pip install aesir
+> Requirement already satisfied: aesir in /path/to/pyenv/python3.12/site-packages (0.4.2)
+> Requirement already satisfied: APScheduler
+> Requirement already satisfied: click
+> Requirement already satisfied: docker
+> Requirement already satisfied: pydantic
+> Requirement already satisfied: ...
+> Requirement already satisfied: ...
+> Requirement already satisfied: certifi
 ```
 </details>
 
