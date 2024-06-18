@@ -153,8 +153,8 @@ $ kogai ❯ aesir deploy
 $ kogai ❯ sudo ln -s "$HOME/.docker/run/docker.sock" /var/run/docker.sock
 > Password:
 $ kogai ❯ aesir deploy
-> Deploy duo cluster:                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
-> Deploy shared-volume peripherals:          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+> Deploy duo cluster:                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+> Deploy shared-volume peripherals:      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 ```
 </details>
 
